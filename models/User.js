@@ -5,30 +5,32 @@ const Model = Sequelize.Model;
 
 class User extends Model{}
 User.init({
-    id : {
-        type : Sequelize.INTEGER,
-        allowNull: false,
-        primaryKey: true
-    },
+    id: {
+		autoIncrement: true,
+		primaryKey: true,
+		type: Sequelize.INTEGER
+	},
 
-    name : {
-        type : Sequelize.STRING,
-        allowNull: false,
-    },
+	name: {
+		type: Sequelize.STRING,
+		notEmpty: true
+	},
 
-    email : {
-        type : Sequelize.STRING,
-        allowNull: false,
-    },
+	email: {
+		type: Sequelize.STRING,
+		validate: {
+			isEmail: true
+		}
+	},
 
-    password : {
-        type : Sequelize.STRING,
-        allowNull: false,
-    },
+	password: {
+		type: Sequelize.STRING,
+		allowNull: false
+	}
 },
 {
     sequelize,
-    modelName: 'User'
+	modelName: 'User'
 })
 
 module.exports = User

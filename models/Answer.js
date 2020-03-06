@@ -25,7 +25,6 @@ date: {
 sequelize,
 modelname: "Answer"
 }
-
 );
 
 

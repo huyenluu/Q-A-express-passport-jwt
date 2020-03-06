@@ -1,3 +1,5 @@
+"use strict";
+
 const fs = require('fs');
 const path = require('path');
 const sequelize = require('../sequelize')
@@ -16,10 +18,12 @@ fs
 
 console.log(db)
 
-Object.keys(db).forEach(modelName => {
-  const model = db[modelName]
-
-  model.sync({ force: true })
+Object.keys(db).forEach(function(modelName) {
+  if ("associate" in db[modelName]) {
+      db[modelName].associate(db);
+  }
 });
+
+db.sequelize = sequelize
 
 module.exports = db;
