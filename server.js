@@ -2,12 +2,10 @@ const express = require('express')
 const passport = require('passport')
 const session = require('express-session')
 const cors = require('cors');
-const flash = require('connect-flash');
-// const env = require('dotenv').load()
-// var exphbs = require('express-handlebars')
 
 const models = require("./models");
 const userController = require('./controllers/user-controller')
+const questionController = require('./controllers/questions-conroller')
 
 const port = 8081
 const app = express()
@@ -29,14 +27,14 @@ app.use(passport.session()); // persistent login sessions
 
 //Model Controllers
 app.use('/users', userController)
-// app.use('/questions', questionController)
+app.use('/questions', questionController)
 // app.use('/answers', answerController)
 
 //load passport strategies
 require('./config/passport/passport')(passport, models.User);
 
 //Routes
-require('./routes/auth.js')(app, passport);
+require('./controllers/auth.js')(app, passport);
 
 app.get("/", (req, res) => {
     res.send('hello app')

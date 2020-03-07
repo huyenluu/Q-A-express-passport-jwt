@@ -10,5 +10,11 @@ user.get('/', (req, res) => {
         .then(data => res.json(data))
 })
 
+user.get('/:id', (req, res) =>
+ models
+   .User
+   .findOne({ where: { id: req.params.id } })
+   .then(data => res.json(data))
+);
 
 module.exports = user

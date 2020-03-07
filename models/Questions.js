@@ -6,25 +6,24 @@ class Question extends Model {}
 Question.init({
   // attributes
   id: {
+    autoIncrement: true,
     type: Sequelize.INTEGER,
-    allowNull: false,
     primaryKey: true
   },
   title: {
     type: Sequelize.STRING,
     allowNull: false
-    // allowNull defaults to true
   },
-  date: {
+  createdAt: {
       type: Sequelize.DATE,
       
   },
-  user_id: {
+  userId: {
       type: Sequelize.INTEGER,
       allowNull: false
   },
-  text: {
-      type: Sequelize.STRING
+  description: {
+      type: Sequelize.TEXT
   }
 }, {
   sequelize,
