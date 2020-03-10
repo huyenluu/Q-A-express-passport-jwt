@@ -51,7 +51,7 @@ models
     .then(
         () =>
             app.listen(
-                port,
+                process.env.PORT || 8081,
                 function () {
                     console.log('listening on port:', port)
                 }
