@@ -2,6 +2,8 @@ const express = require('express')
 const passport = require('passport')
 const session = require('express-session')
 const cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const models = require("./models");
 const userController = require('./controllers/user-controller')
@@ -10,6 +12,7 @@ const answerController = require('./controllers/answers-controller')
 
 const port = 8081
 const app = express()
+
 
 // For CORS
 app.options('*', cors());
