@@ -1,8 +1,14 @@
 const { Router } = require('express')
 const models = require("../models")
 const questions = Router()
+const passport = require('passport')
 
-questions.get('/', (req, res) => {
+questions.get('/',
+  passport.authenticate('jwt'),
+  (req, res) => {
+    console.clear()
+    console.log(req.user.name)
+
     models
         .Question
         .findAll()

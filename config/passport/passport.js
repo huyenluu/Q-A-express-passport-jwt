@@ -1,4 +1,6 @@
 const bCrypt = require('bcrypt')
+const JwtStrategy = require('passport-jwt').Strategy
+const ExtractJwt = require('passport-jwt').ExtractJwt
 
 module.exports = function (passport, user) {
     const User = user;
@@ -27,7 +29,7 @@ module.exports = function (passport, user) {
                     return done(null, false, {
                         message: 'That email is already taken'
                     });
-                } 
+                }
                 else {
                     const userPassword = generateHash(password);
 
@@ -55,9 +57,11 @@ module.exports = function (passport, user) {
 
     ));
     passport.use('local-signIn', new LocalStrategy(
-        {usernameField: 'email',
-        passwordField: 'password',
-        passReqToCallback: true},
+        {
+            usernameField: 'email',
+            passwordField: 'password',
+            passReqToCallback: true
+        },
 
         async function (req, email, password, done) {
 
@@ -75,7 +79,7 @@ module.exports = function (passport, user) {
             if (!user) {
                 done(null, false, { message: 'No such user.' })
                 return
-            }else if(!compareHash(password, user.password)){
+            } else if (!compareHash(password, user.password)) {
                 done(null, false, { message: 'Wrong passport.' })
                 return
             }
@@ -84,6 +88,28 @@ module.exports = function (passport, user) {
         }
 
     ))
+
+    passport.use(new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: 'CHANGE_THIS_SECRET',
+    },
+        function (jwt_payload, done) {
+            console.clear()
+            console.log(JSON.stringify(jwt_payload))
+
+
+            User.findByPk(jwt_payload.id)
+                .then(
+                    function (user) {
+                        console.log(JSON.stringify(user))
+                        if (user) return done(null, user);
+                        else return done(null, false);
+                    }
+                );
+        }
+    )
+    );
+
     //serialize
     passport.serializeUser(function (user, done) {
         done(null, user.id);
