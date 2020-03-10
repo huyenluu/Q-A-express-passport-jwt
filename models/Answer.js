@@ -4,21 +4,26 @@ const sequelize = require('../sequelize')
 const Model = Sequelize.Model;
 class Answer extends Model {}
 Answer.init({
-    question_id: {
+    id: {
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
+        primaryKey: true
+    },
+    questionId: {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-user_id: {
+    userId: {
     type: Sequelize.INTEGER,
     allowNull: false
-},
-text: {
-    type: Sequelize.STRING,
-    allowNull: false
-},
-date: {
-    type: Sequelize.DATE
-}
+    },
+    text: {
+        type: Sequelize.TEXT,
+        allowNull: false
+    },
+    date: {
+        type: Sequelize.DATE
+    }
 
 },
 {

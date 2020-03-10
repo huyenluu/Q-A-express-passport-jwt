@@ -5,7 +5,8 @@ const cors = require('cors');
 
 const models = require("./models");
 const userController = require('./controllers/user-controller')
-const questionController = require('./controllers/questions-conroller')
+const questionController = require('./controllers/questions-controller')
+const answerController = require('./controllers/answers-controller')
 
 const port = 8081
 const app = express()
@@ -28,7 +29,7 @@ app.use(passport.session()); // persistent login sessions
 //Model Controllers
 app.use('/users', userController)
 app.use('/questions', questionController)
-// app.use('/answers', answerController)
+app.use('/answers', answerController)
 
 //load passport strategies
 require('./config/passport/passport')(passport, models.User);
