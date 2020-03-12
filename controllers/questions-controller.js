@@ -15,6 +15,7 @@ questions.get('/',
 
 questions.post(
   '/',
+  passport.authenticate('jwt'),
   (req, res) => {
     models
       .Question
